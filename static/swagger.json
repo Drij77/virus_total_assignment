@@ -1,0 +1,182 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "VirusTotal Data Pipeline API",
+        "description": "API for fetching and caching VirusTotal data with rate limiting",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/api/v1/domain/{domain}": {
+            "get": {
+                "summary": "Get domain report",
+                "parameters": [
+                    {
+                        "name": "domain",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Domain name to lookup"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Domain report retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {"type": "boolean"},
+                                        "data": {"type": "object"}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Domain not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/ip/{ip_address}": {
+            "get": {
+                "summary": "Get IP address report",
+                "parameters": [
+                    {
+                        "name": "ip_address",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "IP address to lookup"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IP report retrieved successfully"
+                    },
+                    "404": {
+                        "description": "IP not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/file/{file_hash}": {
+            "get": {
+                "summary": "Get file hash report",
+                "parameters": [
+                    {
+                        "name": "file_hash",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "MD5/SHA1/SHA256 hash to lookup"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File report retrieved successfully"
+                    },
+                    "404": {
+                        "description": "File hash not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/refresh/domain/{domain}": {
+            "post": {
+                "summary": "Force refresh domain report",
+                "parameters": [
+                    {
+                        "name": "domain",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Domain report refreshed successfully"
+                    },
+                    "500": {
+                        "description": "Refresh failed"
+                    }
+                }
+            }
+        },
+        "/api/v1/refresh/ip/{ip_address}": {
+            "post": {
+                "summary": "Force refresh IP report",
+                "parameters": [
+                    {
+                        "name": "ip_address",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IP report refreshed successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/refresh/file/{file_hash}": {
+            "post": {
+                "summary": "Force refresh file report",
+                "parameters": [
+                    {
+                        "name": "file_hash",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File report refreshed successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/diagnostics": {
+            "get": {
+                "summary": "Get system diagnostics",
+                "responses": {
+                    "200": {
+                        "description": "System diagnostics retrieved successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/stats": {
+            "get": {
+                "summary": "Get pipeline statistics",
+                "responses": {
+                    "200": {
+                        "description": "Statistics retrieved successfully"
+                    }
+                }
+            }
+        }
+    }
+}
