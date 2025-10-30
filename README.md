@@ -70,13 +70,6 @@ Key environment variables (see .env.example for all options):
 - `REDIS_URL` - Redis connection string
 - `CACHE_TYPE` - Cache backend ('RedisCache' or 'SimpleCache')
 
-## Development
-
-### Running Tests
-```bash
-pytest tests/
-```
-
 ### Rate Limiting
 
 The app respects VirusTotal's rate limits:
@@ -88,4 +81,5 @@ The app respects VirusTotal's rate limits:
 - Redis recommended for production (set `CACHE_TYPE=RedisCache`)
 - Falls back to SimpleCache if Redis unavailable
 - Default TTL: 1 hour
+
 - Refresh endpoints invalidate cache
